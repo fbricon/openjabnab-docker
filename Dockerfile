@@ -26,13 +26,15 @@ CMD mkdir /var/www
 WORKDIR /var/www
 
 RUN git clone --depth 1 https://github.com/OpenJabNab/OpenJabNab.git
-
 WORKDIR OpenJabNab/server
 
 RUN qmake -r
 RUN make
 
 RUN cp ./openjabnab.ini-dist ./bin/openjabnab.ini
+RUN sed -i -e"s/^StandAloneAuthBypass = false/StandAloneAuthBypass=true/" ./bin/openjabnab.ini
+RUN sed -i -e"s/^AllowUserManageBunny=false/AllowUserManageBunny=true/" ./bin/openjabnab.ini
+RUN sed -i -e"s/^AllowUserManageBunny=false/AllowUserManageBunny=true/" ./bin/openjabnab.ini
 
 ENV APP_ROOTURL localhost
 ENV APACHE_RUN_USER www-data
